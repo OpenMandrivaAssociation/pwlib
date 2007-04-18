@@ -5,7 +5,7 @@
 
 Summary:	Portable Windows Libary
 Name:		pwlib
-Version:	1.10.5
+Version:	1.10.7
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Libraries
@@ -205,5 +205,3 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 %files -n %{libname}-plugins-avc
 %defattr(-,root,root)
 %attr(0755,root,root) %{_libdir}/pwlib/devices/videoinput/avc_pwplugin.so
-
-
