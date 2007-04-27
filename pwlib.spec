@@ -6,7 +6,7 @@
 Summary:	Portable Windows Libary
 Name:		pwlib
 Version:	1.10.7
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Libraries
 URL:		http://www.openh323.org/
@@ -22,7 +22,11 @@ BuildRequires:  expat-devel
 BuildRequires:	flex
 BuildRequires:	gcc-c++
 BuildRequires:	libavc1394-devel
+%if %mdkversion >= 200710
 BuildRequires:  dc1394-devel >= 0.9.5
+%else
+BuildRequires:  libdc1394-devel = 1.2.1
+%endif
 BuildRequires:	libdv-devel
 BuildRequires:	libraw1394-devel
 BuildRequires:	openldap-devel
