@@ -6,7 +6,7 @@
 Summary:	Portable Windows Libary
 Name:		pwlib
 Version:	1.10.7
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPL
 Group:		System/Libraries
 URL:		http://www.openh323.org/
