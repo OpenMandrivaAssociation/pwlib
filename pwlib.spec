@@ -3,7 +3,7 @@
 
 %define epoch	1
 
-Summary:	Portable Windows Libary
+Summary:	Portable Windows Library
 Name:		pwlib
 Version:	1.10.7
 Release:	%mkrel 4
