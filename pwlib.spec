@@ -5,12 +5,12 @@
 
 Summary:	Portable Windows Library
 Name:		pwlib
-Version:	1.10.9
+Version:	1.10.10
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Libraries
 URL:		http://www.openh323.org/
-Source0:	http://www.ekiga.org/admin/downloads/latest/sources/sources/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.bz2
 Patch0:		pwlib-1.8.0-libname.diff
 Patch1:		pwlib-1.8.0-fix-libpt.so-symlink.diff
 Patch2:		pwlib-1.9.2-lib64.patch
