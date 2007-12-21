@@ -1,13 +1,14 @@
-%define major	1
-%define libname %mklibname %{name} %{major}
+%define major		1
+%define libname		%mklibname %{name} %{major}
+%define develname	%mklibname %{name} -d
 
 %define epoch	1
 
 Summary:	Portable Windows Library
 Name:		pwlib
 Version:	1.10.10
-Release:	%mkrel 2
-License:	GPL
+Release:	%mkrel 3
+License:	MPL
 Group:		System/Libraries
 URL:		http://www.openh323.org/
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.bz2
@@ -16,7 +17,7 @@ Patch1:		pwlib-1.8.0-fix-libpt.so-symlink.diff
 Patch2:		pwlib-1.9.2-lib64.patch
 
 BuildRequires:	alsa-lib-devel
-BuildRequires:	autoconf2.5 
+BuildRequires:	autoconf
 BuildRequires:	bison
 BuildRequires:  expat-devel
 BuildRequires:	flex
@@ -35,12 +36,11 @@ BuildRequires:	SDL-devel
 BuildRequires:	sed
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildConflicts: libdc1394-devel >= 2.0.0
-
-Epoch:		%epoch
+Epoch:		%{epoch}
 
 %description
 PWLib is a moderately large class library that has its genesis many
-years ago asa method to product applications to run on both Microsoft
+years ago as a method to product applications to run on both Microsoft
 Windows and Unix X-Window systems. It also was to have a Macintosh
 port as well but this never eventeated. Unfortunately this package
 contains no GUI code.
@@ -56,21 +56,22 @@ Requires:	%{libname}-plugins >= %{epoch}:%{version}-%{release}
 
 %description -n	%{libname}
 PWLib is a moderately large class library that has its genesis many
-years ago asa method to product applications to run on both Microsoft
+years ago as a method to product applications to run on both Microsoft
 Windows and Unix X-Window systems. It also was to have a Macintosh
 port as well but this never eventuated.  Unfortunately this package
 contains no GUI code.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Portable Windows Libary development files
 Group:		Development/C
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Provides:	%{name}%{major}-devel = %{version}-%{release}
-Obsoletes:	%{name}%{major}-devel
 Provides:	lib%{name}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
+Obsoletes:	%{name}%{major}-devel
+Obsoletes:	%{mklibname pwlib 1 -d}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 Header files and libraries for developing applications that use pwlib.
 
 %package -n	%{libname}-plugins
@@ -179,11 +180,11 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 
 %files -n %{libname}
 %defattr(-,root,root)
-%doc *.txt
 %attr(0755,root,root) %{_libdir}/lib*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
+%doc *.txt
 %attr(0755,root,root) %{_bindir}/ptlib-config
 %attr(0755,root,root) %{_libdir}/*.so
 %{_includedir}/*
