@@ -33,6 +33,7 @@ BuildRequires:	openldap-devel
 BuildRequires:	openssl-devel
 BuildRequires:	SDL-devel
 BuildRequires:	sed
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildConflicts: libdc1394-devel >= 2.0.0
 
 Epoch:		%epoch
