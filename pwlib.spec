@@ -2,16 +2,18 @@
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
 
+%define fver	%(echo %{version} | tr . _)
+
 %define epoch	1
 
 Summary:	Portable Windows Library
 Name:		pwlib
-Version:	1.10.10
-Release:	%mkrel 3
+Version:	1.12.0
+Release:	%mkrel 1
 License:	MPL
 Group:		System/Libraries
-URL:		http://www.openh323.org/
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.bz2
+URL:		http://www.h323plus.org
+Source0:	http://www.h323plus.org/source/download/%{name}-v%{fver}-src.tar.gz
 Patch0:		pwlib-1.8.0-libname.diff
 Patch1:		pwlib-1.8.0-fix-libpt.so-symlink.diff
 Patch2:		pwlib-1.9.2-lib64.patch
@@ -42,8 +44,10 @@ Epoch:		%{epoch}
 PWLib is a moderately large class library that has its genesis many
 years ago as a method to product applications to run on both Microsoft
 Windows and Unix X-Window systems. It also was to have a Macintosh
-port as well but this never eventeated. Unfortunately this package
+port as well but this never eventuated. Unfortunately this package
 contains no GUI code.
+
+This is the Vox Gratia version of pwlib.
 
 %package -n	%{libname}
 Summary:	Portable Windows Libary
@@ -58,8 +62,10 @@ Requires:	%{libname}-plugins >= %{epoch}:%{version}-%{release}
 PWLib is a moderately large class library that has its genesis many
 years ago as a method to product applications to run on both Microsoft
 Windows and Unix X-Window systems. It also was to have a Macintosh
-port as well but this never eventuated.  Unfortunately this package
+port as well but this never eventuated. Unfortunately this package
 contains no GUI code.
+
+This is the Vox Gratia version of pwlib.
 
 %package -n	%{develname}
 Summary:	Portable Windows Libary development files
@@ -123,7 +129,7 @@ This package contains the AVC plugin for pwlib
 
 %prep
 
-%setup -q
+%setup -q -n ptlib_v%{fver}
 
 %patch0 -p0 -b .libname
 %patch1 -p0 -b .libptsymlink
@@ -148,8 +154,8 @@ autoconf
 %makeinstall_std
 
 %if %mdkversion >= 1020
-%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ptbuildopts.h
-%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ptlib/pluginmgr.h
+%multiarch_includes %{buildroot}%{_includedir}/ptbuildopts.h
+%multiarch_includes %{buildroot}%{_includedir}/ptlib/pluginmgr.h
 %endif
 
 #fix PWLIBDIR
@@ -180,7 +186,7 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 
 %files -n %{libname}
 %defattr(-,root,root)
-%attr(0755,root,root) %{_libdir}/lib*.so.*
+%attr(0755,root,root) %{_libdir}/lib*.so.%{major}*
 
 %files -n %{develname}
 %defattr(-,root,root)
