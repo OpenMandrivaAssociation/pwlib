@@ -144,7 +144,9 @@ autoconf
 %if %mdkversion >= 1020
     --enable-v4l2 \
 %endif
-    --enable-plugins
+    --enable-plugins \
+    --enable-oss \
+    --enable-esd
 
 %make OPTCCFLAGS="" RPM_OPT_FLAGS=""
 
@@ -204,6 +206,7 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 %dir %{_libdir}/pwlib/devices/videoinput
 %attr(0755,root,root) %{_libdir}/pwlib/devices/sound/alsa_pwplugin.so
 %attr(0755,root,root) %{_libdir}/pwlib/devices/sound/oss_pwplugin.so
+%attr(0755,root,root) %{_libdir}/pwlib/devices/sound/esd_pwplugin.so
 %attr(0755,root,root) %{_libdir}/pwlib/devices/videoinput/v4l_pwplugin.so
 %if %mdkversion >= 1020
 %attr(0755,root,root) %{_libdir}/pwlib/devices/videoinput/v4l2_pwplugin.so
