@@ -9,7 +9,7 @@
 Summary:	Portable Windows Library
 Name:		pwlib
 Version:	1.12.0
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	MPL
 Group:		System/Libraries
 URL:		http://www.h323plus.org
@@ -17,7 +17,9 @@ Source0:	http://www.h323plus.org/source/download/%{name}-v%{fver}-src.tar.gz
 Patch0:		pwlib-1.8.0-libname.diff
 Patch1:		pwlib-1.8.0-fix-libpt.so-symlink.diff
 Patch2:		pwlib-1.9.2-lib64.patch
-
+# By Anssi: fixes preprocessing tokens, fixes build of h323plus
+# - AdamW 2007/12
+Patch3:		pwlib-1.12.0-preprocess.patch
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf
 BuildRequires:	bison
@@ -134,6 +136,7 @@ This package contains the AVC plugin for pwlib
 %patch0 -p0 -b .libname
 %patch1 -p0 -b .libptsymlink
 %patch2 -p1 -b .lib64
+%patch3 -p1 -b .preprocess
 
 #needed by patch2
 autoconf
