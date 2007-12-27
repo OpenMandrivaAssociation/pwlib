@@ -2,24 +2,20 @@
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
 
-%define fver	%(echo %{version} | tr . _)
-
 %define epoch	1
 
 Summary:	Portable Windows Library
 Name:		pwlib
-Version:	1.12.0
-Release:	%mkrel 2
+Version:	1.10.10
+Release:	%mkrel 3
 License:	MPL
 Group:		System/Libraries
-URL:		http://www.h323plus.org
-Source0:	http://www.h323plus.org/source/download/%{name}-v%{fver}-src.tar.gz
+URL:		http://www.openh323.org/
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.bz2
 Patch0:		pwlib-1.8.0-libname.diff
 Patch1:		pwlib-1.8.0-fix-libpt.so-symlink.diff
 Patch2:		pwlib-1.9.2-lib64.patch
-# By Anssi: fixes preprocessing tokens, fixes build of h323plus
-# - AdamW 2007/12
-Patch3:		pwlib-1.12.0-preprocess.patch
+
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf
 BuildRequires:	bison
@@ -46,10 +42,8 @@ Epoch:		%{epoch}
 PWLib is a moderately large class library that has its genesis many
 years ago as a method to product applications to run on both Microsoft
 Windows and Unix X-Window systems. It also was to have a Macintosh
-port as well but this never eventuated. Unfortunately this package
+port as well but this never eventeated. Unfortunately this package
 contains no GUI code.
-
-This is the Vox Gratia version of pwlib.
 
 %package -n	%{libname}
 Summary:	Portable Windows Libary
@@ -64,10 +58,8 @@ Requires:	%{libname}-plugins >= %{epoch}:%{version}-%{release}
 PWLib is a moderately large class library that has its genesis many
 years ago as a method to product applications to run on both Microsoft
 Windows and Unix X-Window systems. It also was to have a Macintosh
-port as well but this never eventuated. Unfortunately this package
+port as well but this never eventuated.  Unfortunately this package
 contains no GUI code.
-
-This is the Vox Gratia version of pwlib.
 
 %package -n	%{develname}
 Summary:	Portable Windows Libary development files
@@ -131,12 +123,11 @@ This package contains the AVC plugin for pwlib
 
 %prep
 
-%setup -q -n ptlib_v%{fver}
+%setup -q
 
 %patch0 -p0 -b .libname
 %patch1 -p0 -b .libptsymlink
 %patch2 -p1 -b .lib64
-%patch3 -p1 -b .preprocess
 
 #needed by patch2
 autoconf
@@ -147,9 +138,7 @@ autoconf
 %if %mdkversion >= 1020
     --enable-v4l2 \
 %endif
-    --enable-plugins \
-    --enable-oss \
-    --enable-esd
+    --enable-plugins
 
 %make OPTCCFLAGS="" RPM_OPT_FLAGS=""
 
@@ -159,8 +148,8 @@ autoconf
 %makeinstall_std
 
 %if %mdkversion >= 1020
-%multiarch_includes %{buildroot}%{_includedir}/ptbuildopts.h
-%multiarch_includes %{buildroot}%{_includedir}/ptlib/pluginmgr.h
+%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ptbuildopts.h
+%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ptlib/pluginmgr.h
 %endif
 
 #fix PWLIBDIR
@@ -191,7 +180,7 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 
 %files -n %{libname}
 %defattr(-,root,root)
-%attr(0755,root,root) %{_libdir}/lib*.so.%{major}*
+%attr(0755,root,root) %{_libdir}/lib*.so.*
 
 %files -n %{develname}
 %defattr(-,root,root)
@@ -209,7 +198,6 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 %dir %{_libdir}/pwlib/devices/videoinput
 %attr(0755,root,root) %{_libdir}/pwlib/devices/sound/alsa_pwplugin.so
 %attr(0755,root,root) %{_libdir}/pwlib/devices/sound/oss_pwplugin.so
-%attr(0755,root,root) %{_libdir}/pwlib/devices/sound/esd_pwplugin.so
 %attr(0755,root,root) %{_libdir}/pwlib/devices/videoinput/v4l_pwplugin.so
 %if %mdkversion >= 1020
 %attr(0755,root,root) %{_libdir}/pwlib/devices/videoinput/v4l2_pwplugin.so
