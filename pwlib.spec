@@ -7,7 +7,7 @@
 Summary:	Portable Windows Library
 Name:		pwlib
 Version:	1.10.10
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	MPL
 Group:		System/Libraries
 URL:		http://www.openh323.org/
@@ -15,6 +15,7 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.bz
 Patch0:		pwlib-1.8.0-libname.diff
 Patch1:		pwlib-1.8.0-fix-libpt.so-symlink.diff
 Patch2:		pwlib-1.9.2-lib64.patch
+Patch3:		pwlib-1.10.10-libv4l.patch
 
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf
@@ -30,6 +31,7 @@ BuildRequires:  libdc1394-devel = 1.2.1
 %endif
 BuildRequires:	libdv-devel
 BuildRequires:	libraw1394-devel
+BuildRequires:	libv4l-devel
 BuildRequires:	openldap-devel
 BuildRequires:	openssl-devel
 BuildRequires:	SDL-devel
@@ -128,6 +130,7 @@ This package contains the AVC plugin for pwlib
 %patch0 -p0 -b .libname
 %patch1 -p0 -b .libptsymlink
 %patch2 -p1 -b .lib64
+%patch3 -p1 -b .libv4l
 
 #needed by patch2
 autoconf
