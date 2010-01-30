@@ -1,3 +1,5 @@
+%define build_avc 0
+
 %define major		1
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
@@ -7,7 +9,7 @@
 Summary:	Portable Windows Library
 Name:		pwlib
 Version:	1.10.10
-Release:	%mkrel 5
+Release:	%mkrel 6
 License:	MPL
 Group:		System/Libraries
 URL:		http://www.openh323.org/
@@ -16,6 +18,7 @@ Patch0:		pwlib-1.8.0-libname.diff
 Patch1:		pwlib-1.8.0-fix-libpt.so-symlink.diff
 Patch2:		pwlib-1.9.2-lib64.patch
 Patch3:		pwlib-1.10.10-libv4l.patch
+Patch4:		pwlib-1.10.10-fix-str-fmt.patch
 
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf
@@ -23,21 +26,18 @@ BuildRequires:	bison
 BuildRequires:  expat-devel
 BuildRequires:	flex
 BuildRequires:	gcc-c++
-BuildRequires:	libavc1394-devel
-%if %mdkversion >= 200710
-BuildRequires:  dc1394-devel >= 0.9.5
-%else
-BuildRequires:  libdc1394-devel = 1.2.1
-%endif
 BuildRequires:	libdv-devel
-BuildRequires:	libraw1394-devel
 BuildRequires:	libv4l-devel
 BuildRequires:	openldap-devel
 BuildRequires:	openssl-devel
 BuildRequires:	SDL-devel
 BuildRequires:	sed
+BuildRequires:	libdc1394_12-devel
+BuildRequires:	libraw1394_8-devel
+%if %build_avc
+BuildRequires:	libavc1394-devel
+%endif
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildConflicts: libdc1394-devel >= 2.0.0
 Epoch:		%{epoch}
 
 %description
@@ -111,6 +111,7 @@ Provides:	%{name}-plugins-dc = %{version}-%{release}
 %description -n	%{libname}-plugins-dc
 This package contains the dc plugin for pwlib
 
+%if %build_avc
 %package -n	%{libname}-plugins-avc
 Summary:	AVC plugin for pwlib
 Group:		System/Libraries
@@ -122,28 +123,24 @@ Provides:	%{name}-plugins-avc = %{version}-%{release}
 
 %description -n	%{libname}-plugins-avc
 This package contains the AVC plugin for pwlib
+%endif
 
 %prep
-
 %setup -q
-
 %patch0 -p0 -b .libname
 %patch1 -p0 -b .libptsymlink
 %patch2 -p1 -b .lib64
 %patch3 -p1 -b .libv4l
-
-#needed by patch2
-autoconf
+%patch4 -p0 -b .str
 
 %build
-
+autoconf 
 %configure2_5x \
-%if %mdkversion >= 1020
     --enable-v4l2 \
-%endif
     --enable-plugins
 
-%make OPTCCFLAGS="" RPM_OPT_FLAGS=""
+%make
+#OPTCCFLAGS="" RPM_OPT_FLAGS=""
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -214,6 +211,8 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 %defattr(-,root,root)
 %attr(0755,root,root) %{_libdir}/pwlib/devices/videoinput/dc_pwplugin.so
 
+%if %build_avc
 %files -n %{libname}-plugins-avc
 %defattr(-,root,root)
 %attr(0755,root,root) %{_libdir}/pwlib/devices/videoinput/avc_pwplugin.so
+%endif
