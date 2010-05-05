@@ -19,7 +19,7 @@ Patch1:		pwlib-1.8.0-fix-libpt.so-symlink.diff
 Patch2:		pwlib-1.9.2-lib64.patch
 Patch3:		pwlib-1.10.10-libv4l.patch
 Patch4:		pwlib-1.10.10-fix-str-fmt.patch
-
+Patch5:		pwlib-1.10.10-openssl-1.0.patch
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf
 BuildRequires:	bison
@@ -132,6 +132,7 @@ This package contains the AVC plugin for pwlib
 %patch2 -p1 -b .lib64
 %patch3 -p1 -b .libv4l
 %patch4 -p0 -b .str
+%patch5 -p0 -b .ssl
 
 %build
 autoconf 
