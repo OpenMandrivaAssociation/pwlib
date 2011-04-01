@@ -9,7 +9,7 @@
 Summary:	Portable Windows Library
 Name:		pwlib
 Version:	1.10.10
-Release:	%mkrel 9
+Release:	%mkrel 10
 License:	MPL
 Group:		System/Libraries
 URL:		http://www.openh323.org/
@@ -137,6 +137,7 @@ This package contains the AVC plugin for pwlib
 %build
 autoconf 
 %configure2_5x \
+    --disable-v4l \
     --enable-v4l2 \
     --enable-plugins
 
@@ -203,10 +204,7 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 %dir %{_libdir}/pwlib/devices/videoinput
 %attr(0755,root,root) %{_libdir}/pwlib/devices/sound/alsa_pwplugin.so
 %attr(0755,root,root) %{_libdir}/pwlib/devices/sound/oss_pwplugin.so
-%attr(0755,root,root) %{_libdir}/pwlib/devices/videoinput/v4l_pwplugin.so
-%if %mdkversion >= 1020
 %attr(0755,root,root) %{_libdir}/pwlib/devices/videoinput/v4l2_pwplugin.so
-%endif
 
 %files -n %{libname}-plugins-dc
 %defattr(-,root,root)
