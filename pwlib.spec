@@ -9,7 +9,7 @@
 Summary:	Portable Windows Library
 Name:		pwlib
 Version:	1.10.10
-Release:	%mkrel 10
+Release:	%mkrel 11
 License:	MPL
 Group:		System/Libraries
 URL:		http://www.openh323.org/
@@ -149,10 +149,9 @@ autoconf
 
 %makeinstall_std
 
-%if %mdkversion >= 1020
 %multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ptbuildopts.h
+
 %multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ptlib/pluginmgr.h
-%endif
 
 #fix PWLIBDIR
 perl -pi -e 's|(PWLIBDIR.*)=.*|\1= %{_datadir}/pwlib|' %{buildroot}%{_datadir}/pwlib/make/ptbuildopts.mak
@@ -194,6 +193,9 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 %attr(0755,root,root) %{_bindir}/ptlib-config
 %attr(0755,root,root) %{_libdir}/*.so
 %{_includedir}/*
+%{multiarch_includedir}/ptbuildopts.h
+%dir %{multiarch_includedir}/ptlib
+%{multiarch_includedir}/ptlib/pluginmgr.h
 %{_datadir}/pwlib
 
 %files -n %{libname}-plugins
