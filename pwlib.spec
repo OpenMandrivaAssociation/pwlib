@@ -149,9 +149,9 @@ autoconf
 
 %makeinstall_std
 
-%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ptbuildopts.h
+%multiarch_includes %{buildroot}%{_includedir}/ptbuildopts.h
 
-%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ptlib/pluginmgr.h
+%multiarch_includes %{buildroot}%{_includedir}/ptlib/pluginmgr.h
 
 #fix PWLIBDIR
 perl -pi -e 's|(PWLIBDIR.*)=.*|\1= %{_datadir}/pwlib|' %{buildroot}%{_datadir}/pwlib/make/ptbuildopts.mak
