@@ -20,7 +20,7 @@ Patch2:		pwlib-1.9.2-lib64.patch
 Patch3:		pwlib-1.10.10-libv4l.patch
 Patch4:		pwlib-1.10.10-fix-str-fmt.patch
 Patch5:		pwlib-1.10.10-openssl-1.0.patch
-BuildRequires:	alsa-lib-devel
+BuildRequires:	libalsa-devel
 BuildRequires:	autoconf
 BuildRequires:	bison
 BuildRequires:  expat-devel
@@ -171,14 +171,6 @@ find %{buildroot} -type d -perm 0700 -exec chmod 755 {} \;
 find %{buildroot} -type f -perm 0555 -exec chmod 755 {} \;
 find %{buildroot} -type f -perm 0444 -exec chmod 644 {} \;
 find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
