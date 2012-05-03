@@ -185,9 +185,6 @@ find %{buildroot}%{_libdir} -type f -name '*.so*' -exec chmod 755 {} \;
 %attr(0755,root,root) %{_bindir}/ptlib-config
 %attr(0755,root,root) %{_libdir}/*.so
 %{_includedir}/*
-%{multiarch_includedir}/ptbuildopts.h
-%dir %{multiarch_includedir}/ptlib
-%{multiarch_includedir}/ptlib/pluginmgr.h
 %{_datadir}/pwlib
 
 %files -n %{libname}-plugins
