@@ -1,0 +1,14 @@
+--- src/ptclib/pssl.cxx.ssl	2010-05-05 03:22:01.000000000 +0000
++++ src/ptclib/pssl.cxx	2010-05-05 03:25:01.000000000 +0000
+@@ -888,7 +888,11 @@
+   InitialisationMutex.Signal();
+ 
+   // create the new SSL context
++#if OPENSSL_VERSION_NUMBER >= 0x1000000fL
++  const SSL_METHOD * meth = SSLv23_method();
++#else
+   SSL_METHOD * meth = SSLv23_method();
++#endif
+   context  = SSL_CTX_new(meth);
+   if (context == NULL)
+     PSSLAssert("Error creating context: ");

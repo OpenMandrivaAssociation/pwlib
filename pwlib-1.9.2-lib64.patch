@@ -1,0 +1,64 @@
+--- pwlib-1.9.2/make/ptlib-config.in.lib64	2005-09-18 13:05:36.000000000 +0200
++++ pwlib-1.9.2/make/ptlib-config.in	2006-01-18 16:20:23.000000000 +0100
+@@ -8,6 +8,7 @@
+ CCFLAGS="@STDCCFLAGS@"
+ LDFLAGS="@LDFLAGS@"
+ LIBS="@ENDLDLIBS@ -lpt"
++LIB="@LIB"
+ LIBDIR="@LIBDIR@"
+ PWINSTDIR="@INSTALLPREFIX@/share/pwlib"
+ MACHTYPE="@MACHTYPE@"
+@@ -17,7 +18,7 @@
+ INSTALLPREFIX="@INSTALLPREFIX@"
+ 
+ # usage="Usage: ptlib-config [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--cflags]"
+-usage="Usage: ptlib-config [--version] [--pwlibdir] [--ccflags] [--ldflags] [--libs] [--machtype] [--ostype] [--osrelease] [--sharedlibext] [--prefix] [--libdir]"
++usage="Usage: ptlib-config [--version] [--pwlibdir] [--ccflags] [--ldflags] [--libs] [--machtype] [--ostype] [--osrelease] [--sharedlibext] [--prefix] [--libdir] [--lib]"
+ 
+ if test $# -eq 0; then
+       echo "${usage}" 1>&2
+@@ -64,6 +65,9 @@
+     --libdir)
+       echo $LIBDIR
+       ;;
++    --lib)
++      echo $LIB
++      ;;
+     --all)
+       echo VERSION      = $VERSION
+       echo PWLIBDIR     = $PWINSTDIR
+@@ -76,6 +80,7 @@
+       echo SHAREDLIBEXT = $SHAREDLIBEXT
+       echo PREFIX       = $INSTALLPREFIX
+       echo LIBDIR       = $LIBDIR
++      echo LIB          = $LIB
+       ;;
+ 
+     *)
+--- pwlib-1.9.2/make/unix.mak.lib64	2006-01-18 16:19:36.000000000 +0100
++++ pwlib-1.9.2/make/unix.mak	2006-01-18 16:19:36.000000000 +0100
+@@ -444,6 +444,7 @@
+ 
+ STATIC_LIBS	:= libstdc++.a libg++.a libm.a libc.a
+ SYSLIBDIR	:= $(shell $(PWLIBDIR)/make/ptlib-config --libdir)
++LIB			:= $(shell $(PWLIBDIR)/make/ptlib-config --lib)
+ 
+ endif # linux
+ 
+--- pwlib-1.9.2/configure.ac.lib64	2006-01-16 20:52:05.000000000 +0100
++++ pwlib-1.9.2/configure.ac	2006-01-18 16:19:36.000000000 +0100
+@@ -845,10 +845,12 @@
+ AC_SUBST(HAS_PLUGINS)
+ 
+ if test "x$LIB64" != "x" ; then
+-  AC_DEFINE_UNQUOTED([P_DEFAULT_PLUGIN_DIR], ["${INSTALLPREFIX}/lib64/pwlib"], [Default plugin directory])
++  LIB=lib64
+ else
+-  AC_DEFINE_UNQUOTED([P_DEFAULT_PLUGIN_DIR], ["${INSTALLPREFIX}/lib/pwlib"], [Default plugin directory])
++  LIB=lib
+ fi
++AC_SUBST(LIB)
++AC_DEFINE_UNQUOTED([P_DEFAULT_PLUGIN_DIR], ["${INSTALLPREFIX}/${LIB}/pwlib"], [Default plugin directory])
+ 
+ dnl ########################################################################
+ dnl look for DNS resolver code (must be done before OpenLDAP)

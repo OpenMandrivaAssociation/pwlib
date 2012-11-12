@@ -1,0 +1,11 @@
+--- src/ptlib/unix/svcproc.cxx.str	2010-01-30 06:18:12.000000000 +0100
++++ src/ptlib/unix/svcproc.cxx	2010-01-30 06:18:26.000000000 +0100
+@@ -961,7 +961,7 @@
+ #ifdef P_VXWORKS
+   logMsg((char *)msg,0,0,0,0,0,0);
+ #else
+-    syslog(LOG_CRIT, msg); 
++    syslog(LOG_CRIT,"%s", msg); 
+     closelog();
+ #endif // !P_VXWORKS
+   }

@@ -1,0 +1,13 @@
+--- Makefile.in	2004-06-24 14:46:48.000000000 +0200
++++ Makefile.in.oden	2004-09-15 01:13:21.948941144 +0200
+@@ -263,10 +263,6 @@
+ 		rm -f  $(PTLIB_FILE) ; \
+ 		ln -sf $(PTLIB_FILE).@MAJOR_VERSION@.@MINOR_VERSION@.@BUILD_NUMBER@ $(PTLIB_FILE) \
+ 	)
+-	(cd $(DESTDIR)$(LIBDIR); \
+-		rm -f  libpt.@SHAREDLIBEXT@ ; \
+-		ln -sf $(PTLIB_FILE) libpt.@SHAREDLIBEXT@ \
+-	)
+ ifeq (1, $(HAS_PLUGINS))
+ 	cd plugins/pwlib/device/ ; \
+ 	( for dir in ./* ;\
