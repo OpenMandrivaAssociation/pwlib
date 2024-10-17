@@ -12,7 +12,7 @@ Version:	1.10.10
 Release:	%mkrel 12
 License:	MPL
 Group:		System/Libraries
-URL:		http://www.openh323.org/
+URL:		https://www.openh323.org/
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.bz2
 Patch0:		pwlib-1.8.0-libname.diff
 Patch1:		pwlib-1.8.0-fix-libpt.so-symlink.diff
